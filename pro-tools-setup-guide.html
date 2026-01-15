@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Tools Ultimate 2024.10.3 Installation Guide</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            font-size: 11pt;
+        }
+
+        h1 {
+            color: #1a1a2e;
+            border-bottom: 3px solid #4a90d9;
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 22pt;
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            font-size: 14pt;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 20px;
+            font-size: 12pt;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 11pt;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .step-box {
+            background: #f8f9fa;
+            border-left: 4px solid #4a90d9;
+            padding: 15px;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #4a90d9;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 12pt;
+        }
+
+        .step-title {
+            font-weight: bold;
+            font-size: 13pt;
+            color: #1a1a2e;
+        }
+
+        ol, ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .prereq-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .prereq-box h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+
+        .warning-box {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .tip-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 10pt;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #4a90d9;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: "SF Mono", Monaco, "Courier New", monospace;
+            font-size: 10pt;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 9pt;
+            text-align: center;
+        }
+
+        .troubleshoot-item {
+            margin: 15px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .troubleshoot-item strong {
+            color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pro Tools Ultimate 2024.10.3</h1>
+    <p class="subtitle">Installation Guide for Mac Mini 2018 - macOS Ventura</p>
+
+    <div class="prereq-box">
+        <h3>Prerequisites</h3>
+        <p>Before starting, ensure you have:</p>
+        <ul>
+            <li>Active Avid account with Pro Tools Ultimate license</li>
+            <li>iLok account with valid authorization</li>
+            <li>iLok USB dongle (if using hardware iLok) or iLok Cloud enabled</li>
+            <li>Stable internet connection</li>
+            <li>Audio interface drivers downloaded (if required by your hardware)</li>
+        </ul>
+    </div>
+
+    <div class="step-box">
+        <p><span class="step-number">1</span><span class="step-title">Prepare the System</span></p>
+        <ol>
+            <li><strong>Run Software Update</strong>
+                <ul>
+                    <li>System Preferences &gt; Software Update</li>
+                    <li>Install all available updates</li>
+                    <li>Restart if prompted</li>
+                </ul>
+            </li>
+            <li><strong>Verify disk space</strong> - Pro Tools requires approximately 15GB free space</li>
+            <li><strong>Disable sleep settings during installation</strong>
+                <ul>
+                    <li>System Preferences &gt; Energy Saver</li>
+                    <li>Set display and computer sleep to "Never" temporarily</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="step-box">
+        <p><span class="step-number">2</span><span class="step-title">Install iLok License Manager</span></p>
+        <ol>
+            <li>Go to <strong>ilok.com</strong></li>
+            <li>Download <strong>iLok License Manager</strong> for macOS</li>
+            <li>Open the installer and follow prompts</li>
+            <li>Launch iLok License Manager after installation</li>
+            <li>Sign in with your iLok credentials</li>
+            <li>Verify your Pro Tools Ultimate license is visible</li>
+        </ol>
+    </div>
+
+    <div class="step-box">
+        <p><span class="step-number">3</span><span class="step-title">Download Pro Tools 2024.10.3</span></p>
+        <ol>
+            <li>Sign into your Avid account at <strong>avid.com/account</strong></li>
+            <li>Navigate to <strong>My Products &gt; Pro Tools</strong></li>
+            <li>Locate <strong>Pro Tools Ultimate 2024.10.3</strong> in your downloads</li>
+            <li>Download the macOS installer package</li>
+            <li>Wait for download to complete (file is several GB)</li>
+        </ol>
+    </div>
+
+    <div class="step-box">
+        <p><span class="step-number">4</span><span class="step-title">Install Pro Tools</span></p>
+        <ol>
+            <li><strong>Locate the installer</strong> - Find the downloaded <code>.dmg</code> file in Downloads</li>
+            <li><strong>Mount the disk image</strong> - Double-click to mount</li>
+            <li><strong>Run the installer</strong> - Double-click "Install Pro Tools"</li>
+            <li>Enter admin password when prompted</li>
+            <li>Accept the license agreement</li>
+            <li><strong>Select components:</strong>
+                <ul>
+                    <li>Pro Tools Application (required)</li>
+                    <li>Avid Audio Drivers (recommended)</li>
+                    <li>Additional content packs (optional)</li>
+                </ul>
+            </li>
+            <li>Wait for installation to finish</li>
+            <li><strong>Restart when prompted</strong></li>
+        </ol>
+    </div>
+
+    <div class="step-box">
+        <p><span class="step-number">5</span><span class="step-title">Authorize Pro Tools</span></p>
+        <ol>
+            <li>Launch Pro Tools</li>
+            <li>When prompted, select your authorization method:
+                <ul>
+                    <li><strong>iLok Cloud</strong> - Requires internet connection</li>
+                    <li><strong>iLok USB</strong> - Requires physical iLok dongle</li>
+                </ul>
+            </li>
+            <li>Sign into your iLok account if prompted</li>
+            <li>Select your Pro Tools Ultimate license</li>
+            <li>Confirm authorization</li>
+        </ol>
+    </div>
+
+    <div class="step-box">
+        <p><span class="step-number">6</span><span class="step-title">Configure Audio Hardware</span></p>
+        <ol>
+            <li><strong>Connect your audio interface</strong> - USB, Thunderbolt, or appropriate connection</li>
+            <li><strong>Open Pro Tools</strong></li>
+            <li>Go to <strong>Setup &gt; Playback Engine</strong>
+                <ul>
+                    <li>Select your audio interface from the dropdown</li>
+                    <li>Set H/W Buffer Size: 512-1024 for mixing, 128-256 for recording</li>
+                </ul>
+            </li>
+            <li>Go to <strong>Setup &gt; I/O</strong>
+                <ul>
+                    <li>Verify inputs and outputs are correctly mapped</li>
+                    <li>Create or import I/O settings as needed</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="step-box">
+        <p><span class="step-number">7</span><span class="step-title">Test Your Installation</span></p>
+        <ol>
+            <li><strong>Create a new session</strong> - File &gt; New Session</li>
+            <li>Choose a location and sample rate (typically 48kHz)</li>
+            <li><strong>Test audio playback</strong> - Import an audio file or create a test tone</li>
+            <li><strong>Test recording</strong> (if applicable)
+                <ul>
+                    <li>Create an audio track</li>
+                    <li>Arm for recording and verify input signal</li>
+                    <li>Record a short test clip</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="troubleshoot-item">
+        <strong>Pro Tools won't launch:</strong>
+        <ul>
+            <li>Verify iLok License Manager is installed</li>
+            <li>Check authorization status in iLok License Manager</li>
+            <li>Restart the computer</li>
+        </ul>
+    </div>
+
+    <div class="troubleshoot-item">
+        <strong>No audio interface detected:</strong>
+        <ul>
+            <li>Check physical connections</li>
+            <li>Install manufacturer's drivers if required</li>
+            <li>Try a different USB/Thunderbolt port</li>
+        </ul>
+    </div>
+
+    <div class="troubleshoot-item">
+        <strong>Playback engine errors:</strong>
+        <ul>
+            <li>Increase H/W Buffer Size</li>
+            <li>Close other audio applications</li>
+            <li>Reset Pro Tools preferences (hold <code>Shift+Option+Command</code> on launch)</li>
+        </ul>
+    </div>
+
+    <h2>System Requirements Reference</h2>
+
+    <table>
+        <tr>
+            <th>Requirement</th>
+            <th>Specification</th>
+        </tr>
+        <tr>
+            <td>macOS</td>
+            <td>Ventura 13.x (Intel compatible)</td>
+        </tr>
+        <tr>
+            <td>RAM</td>
+            <td>32GB (exceeds 16GB minimum)</td>
+        </tr>
+        <tr>
+            <td>Processor</td>
+            <td>Intel i7 6-core (meets requirements)</td>
+        </tr>
+        <tr>
+            <td>Storage</td>
+            <td>SSD with 15GB+ free space</td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        <p>Mac Mini 2018 Recovery Project | Pro Tools Ultimate 2024.10.3 | macOS Ventura</p>
+    </div>
+</body>
+</html>
