@@ -1,68 +1,103 @@
 # Mac Mini Pro Tools Recovery
 
-Tech support project - system recovery and software reinstall.
+**YOU ARE RUNNING DIRECTLY ON THIS MAC MINI.** You can execute macOS commands via Terminal to help with recovery tasks.
 
-## System Specs
+## This Machine
 
 | Component | Details |
 |-----------|---------|
-| Machine | Mac Mini 2018 |
-| CPU | 3.2 GHz 6-core Intel i7 |
+| Machine | Mac Mini 2018 (Macmini8,1) |
+| CPU | 3.2 GHz 6-core Intel i7 (x64 architecture) |
 | RAM | 32 GB DDR4 |
-| Target OS | macOS Ventura 13.7.8 |
+| OS | macOS Ventura 13.7.8 |
 | Target Software | Pro Tools Ultimate 2024.10.3 |
 
-## Problem
+## Current Status
 
-Computer is failing and needs complete reinstall from scratch.
+**CURRENT PHASE: Phase 3 - External Hard Drive Restoration**
 
-## Tasks
+We are trying to recover data from external hard drives with corrupted/missing partition tables.
 
-### Phase 1: Create Bootable USB
-- [x] Obtain 16GB+ USB drive
-- [x] Download macOS Ventura installer on a working Mac
-- [x] Create bootable installer using `createinstallmedia`
+### Progress Summary
+- Phase 1: Create Bootable USB ✅ COMPLETE
+- Phase 2: Reinstall macOS ✅ COMPLETE
+- **Phase 3: Drive Restoration** ⬅️ IN PROGRESS
+- Phase 4: Install Pro Tools (pending)
 
-### Phase 2: Reinstall macOS
-- [x] Boot from USB (hold Option key)
-- [x] Erase internal drive (APFS format)
-- [x] Install macOS Ventura
-- [x] Complete initial setup
+---
 
-### Phase 3: External Hard Drive Restoration (CURRENT PHASE)
-**Goal:** Recover data from external drives that may have corruption or compatibility issues.
+## Phase 3: External Hard Drives
 
-- [ ] Restore WD My Passport for Mac (PRIORITY) - see `wd-my-passport-restoration.md`
-- [ ] Mount Monster Digital Overdrive
-- [ ] Mount G-Technology G-Drive Mini (requires FireWire adapter)
-- [ ] Verify all data is accessible
-- [ ] Extract needed files to Mac Mini
+### Drives to Recover
 
-### Phase 4: Install Pro Tools Ultimate
-- [ ] Download Pro Tools 2024.10.3 from Avid account
-- [ ] Install Pro Tools
-- [ ] Authorize with iLok
-- [ ] Verify audio interface compatibility
-- [ ] Test basic session playback
-- [ ] See `pro-tools-setup-guide.pdf` for detailed instructions
+| Priority | Drive | Capacity | Connection | Status |
+|----------|-------|----------|------------|--------|
+| **1st** | **WD My Passport for Mac** | 1 TB | USB | **Uninitialized - no partition table** |
+| 2nd | Monster Digital Overdrive | 240 GB | USB | Not yet tested |
+| 3rd | G-Technology G-Drive Mini | 1 TB | FireWire 800 | Needs adapters |
 
-## External Hard Drives
+### WD My Passport - Current Issue
 
-| Priority | Drive | Capacity | Serial/Model | Connection |
-|----------|-------|----------|--------------|------------|
-| **1st** | **WD My Passport for Mac** | — | WX21A63V5483 | USB |
-| 2nd | Monster Digital Overdrive | 240 GB | ODT3246 | USB |
-| 3rd | G-Technology G-Drive Mini | 1 TB | 0G0256 / GDRNU3PA1001BDB | FireWire 800 |
+**See `wd-my-passport-restoration.md` for full troubleshooting log.**
 
-### G-Drive Mini Adapter Requirements
+**Summary:**
+- Drive detected as `/dev/disk2` (1 TB, external, physical)
+- Shows "Uninitialized" in Disk Utility
+- Partition map: "Not Supported"
+- `diskutil list` shows NO partitions - just raw disk
+- First Aid ran successfully but didn't fix it
+- **Likely cause:** Partition table corrupted/missing, but data may still exist on disk
 
-The G-Drive Mini uses FireWire 800 (square ports). The 2018 Mac Mini needs:
-- Thunderbolt 3 (USB-C) to Thunderbolt 2 Adapter (~$29)
-- Thunderbolt 2 to FireWire 800 Adapter (~$29)
+**Next step:** Install TestDisk to scan for lost partitions and attempt recovery.
 
-Or check if the G-Drive has a USB port as well.
+### Useful Commands
 
-## Accounts
+**List all disks:**
+```bash
+diskutil list
+```
+
+**Get detailed disk info:**
+```bash
+diskutil info /dev/disk2
+```
+
+**Check for data on raw disk (sample read):**
+```bash
+sudo dd if=/dev/disk2 bs=1M count=10 skip=1 2>/dev/null | strings | head -50
+```
+
+**Install Homebrew (if needed):**
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+**Install TestDisk via Homebrew:**
+```bash
+brew install testdisk
+```
+
+**Run TestDisk:**
+```bash
+sudo testdisk
+```
+
+---
+
+## Phase 4: Pro Tools Installation (Future)
+
+See `pro-tools-setup-guide.md` and `pro-tools-setup-guide.pdf` for detailed instructions.
+
+| File | Size | MD5 Checksum |
+|------|------|--------------|
+| Pro Tools 2024.10.3 (Mac) | ~6.3 GB | `d79b6e22726ff5b27ad691a43f011b95` |
+| HD Driver 2024.10.3 (Mac) | ~568 MB | `521c6913c78b97ec511e8a0e16255c30` |
+
+**Download:** https://my.avid.com/esd/Product/Download/2965
+
+**Why 2024.10.3?** Last version supporting Mac Mini 2018. Pro Tools 2025.6+ dropped support.
+
+### Accounts
 
 | Service | Email |
 |---------|-------|
@@ -70,39 +105,29 @@ Or check if the G-Drive has a USB port as well.
 
 ### iLok Authorization
 
-**Using: Physical iLok USB dongle** (not iLok Cloud)
-
+Using **physical iLok USB dongle** (not iLok Cloud):
 - Dongle holds the Pro Tools license
 - Must be plugged in before launching Pro Tools
-- No internet required for authorization
 
-### Avid Download Process
+---
 
-**Direct Download Link:** https://my.avid.com/esd/Product/Download/2965
+## G-Drive Mini Adapter Requirements
 
-1. Go to the link above (or https://my.avid.com/esd)
-2. Login with username/email and password
-3. Download the Mac installer
+The G-Drive Mini uses FireWire 800. This Mac needs:
+- Thunderbolt 3 (USB-C) to Thunderbolt 2 Adapter (~$29)
+- Thunderbolt 2 to FireWire 800 Adapter (~$29)
 
-### Pro Tools 2024.10.3 Download Details
+---
 
-| File | Size | MD5 Checksum |
-|------|------|--------------|
-| **Pro Tools 2024.10.3 (Mac)** | 6,276,483,035 bytes (~6.3 GB) | `d79b6e22726ff5b27ad691a43f011b95` |
-| HD Driver 2024.10.3 (Mac) | 567,584,060 bytes (~568 MB) | `521c6913c78b97ec511e8a0e16255c30` |
+## Important Notes
 
-**Why 2024.10.3?** This is the last Pro Tools version that supports Mac Mini 2018 (Macmini8,1). Pro Tools 2025.6+ dropped support for this hardware.
-
-## Notes
-
-- 2018 Mac Mini is Intel-based (not Apple Silicon) - straightforward macOS install
-- Pro Tools Ultimate requires iLok authorization (physical dongle)
-- Using **Pro Tools 2024.10.3** (not 2025.6.1) because 2018 Mac Mini support was dropped in 2025.x
-- WD My Passport is the priority drive for Phase 3
-- See `pro-tools-setup-guide.pdf` for detailed Pro Tools installation instructions
+- This is an Intel Mac (x64) - NOT Apple Silicon
+- DNS was manually set to 8.8.8.8 / 1.1.1.1 (was broken initially)
+- Node.js and Claude Code have been installed on this machine
+- Always update `wd-my-passport-restoration.md` when troubleshooting the WD drive
 
 ## Resources
 
 - [Avid Pro Tools Downloads](https://www.avid.com/pro-tools/pro-tools-downloads)
-- [Apple: Create bootable installer](https://support.apple.com/en-us/HT201372)
 - [Pro Tools System Requirements](https://avid.secure.force.com/pkb/articles/compatibility/Pro-Tools-System-Requirements)
+- [TestDisk Documentation](https://www.cgsecurity.org/wiki/TestDisk)
