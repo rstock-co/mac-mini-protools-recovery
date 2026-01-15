@@ -32,23 +32,48 @@ We are trying to recover data from external hard drives with corrupted/missing p
 
 | Priority | Drive | Capacity | Connection | Status |
 |----------|-------|----------|------------|--------|
-| **1st** | **WD My Passport for Mac** | 1 TB | USB | **Uninitialized - no partition table** |
-| 2nd | Monster Digital Overdrive | 240 GB | USB | Not yet tested |
-| 3rd | G-Technology G-Drive Mini | 1 TB | FireWire 800 | Needs adapters |
+| **1st** | **WD My Passport for Mac** | 1 TB | USB | **HARDWARE FAILURE** - I/O errors |
+| 2nd | Monster Digital Overdrive | 240 GB | USB | **DEAD** - No power, not detected |
+| 3rd | G-Technology G-Drive Mini | 1 TB | FireWire 800 | Needs adapters (not yet tested) |
 
-### WD My Passport - Current Issue
+### WD My Passport - Recovery Attempted (2026-01-15)
 
 **See `wd-my-passport-restoration.md` for full troubleshooting log.**
 
-**Summary:**
-- Drive detected as `/dev/disk2` (1 TB, external, physical)
-- Shows "Uninitialized" in Disk Utility
-- Partition map: "Not Supported"
-- `diskutil list` shows NO partitions - just raw disk
-- First Aid ran successfully but didn't fix it
-- **Likely cause:** Partition table corrupted/missing, but data may still exist on disk
+**What we tried:**
+- Installed Homebrew and TestDisk
+- Ran TestDisk partition scan - froze due to I/O errors
+- Tested raw disk reads with `dd` - all failed with I/O errors
+- Tried multiple USB ports and reconnections
 
-**Next step:** Install TestDisk to scan for lost partitions and attempt recovery.
+**Diagnosis:**
+- Drive detected as `/dev/disk2` but cannot read any data
+- SMART reports "Verified" (healthy platters)
+- Power draw: 896mA (borderline - only 4mA under 900mA limit)
+- **Cause:** USB-SATA bridge in enclosure is likely failing
+
+**Recovery options:**
+1. Try powered USB hub ($20-40) - rules out power issues
+2. Extract internal drive + SATA adapter ($15-25) - bypasses USB bridge
+3. Professional data recovery ($300-1500+) - last resort
+
+**Email draft:** See `wd-recovery-attempt-email.md`
+
+### Monster Digital Overdrive - Recovery Attempted (2026-01-15)
+
+**What we tried:**
+- Connected via USB-B cable through adapter to USB-C
+- Mac showed no USB device detection at all
+
+**Diagnosis:**
+- No power lights, no spinning, completely unresponsive
+- Not a software issue - drive is electrically dead
+
+**Recovery options:**
+1. Try different USB-B cable (if available)
+2. Professional data recovery ($500+ for SSD)
+
+**Email draft:** See `monster-digital-recovery-attempt-email.md`
 
 ### Useful Commands
 
@@ -124,7 +149,11 @@ The G-Drive Mini uses FireWire 800. This Mac needs:
 - This is an Intel Mac (x64) - NOT Apple Silicon
 - DNS was manually set to 8.8.8.8 / 1.1.1.1 (was broken initially)
 - Node.js and Claude Code have been installed on this machine
-- Always update `wd-my-passport-restoration.md` when troubleshooting the WD drive
+
+### Installed Tools (2026-01-15)
+- **Homebrew** - `/usr/local/bin/brew`
+- **TestDisk 7.2** - `/usr/local/bin/testdisk` (partition recovery)
+- **GitHub CLI** - `/usr/local/bin/gh` (authenticated for git push)
 
 ## Resources
 
