@@ -89,26 +89,66 @@ Troubleshooting log for recovering data from WD My Passport for Mac.
 
 ---
 
-## Phase 3: Data Recovery Software (TBD)
+## Phase 3: Data Recovery Attempt (2026-01-15)
 
 **Goal:** Use recovery software to scan raw disk for lost partitions or files.
 
-**Recommended Tools:**
+### Step 1: Install Homebrew
+- [x] Ran Homebrew installer in Terminal
+- [x] Installation successful
 
-| Tool | Cost | Notes |
-|------|------|-------|
-| **TestDisk** | Free | Can recover lost partitions, restore partition table |
-| **PhotoRec** | Free | Recovers files directly (ignores filesystem) |
-| Disk Drill | Free tier / Paid | Mac-native, user-friendly |
-| R-Studio | Paid | Professional-grade recovery |
+### Step 2: Install TestDisk
+- [x] Ran: `/usr/local/bin/brew install testdisk`
+- [x] TestDisk 7.2 installed successfully
 
-**Recommended approach:** Try TestDisk first - it may be able to find and restore the original partition.
+### Step 3: Run TestDisk
+- [x] Ran: `sudo /usr/local/bin/testdisk`
+- [x] Selected /dev/disk2 (1 TB WD My Passport)
+- [x] Selected EFI GPT partition table type
+- [x] Selected Analyse → Quick Search
+- [ ] **PROBLEM:** TestDisk froze during scan - 0% CPU usage
 
-### Step 1: Install TestDisk
-- [ ] (Instructions TBD)
+### Step 4: Direct disk read test
+- [x] Ran: `sudo dd if=/dev/disk2 bs=512 count=1`
+- [x] **RESULT:** `dd: /dev/disk2: Input/output error`
+- [x] Multiple attempts - all failed with I/O error
 
-### Step 2: Scan for lost partitions
-- [ ] (Instructions TBD)
+### Step 5: Hardware diagnostics
+- [x] Checked USB power: 896mA required vs 900mA available (marginal)
+- [x] Checked SMART: Reports "Verified" (healthy)
+- [x] Tried different USB port: Same I/O error
+- [x] Tried unplugging/replugging: Same I/O error
+
+**Findings:**
+
+| Test | Result |
+|------|--------|
+| USB Detection | Works - drive enumerated correctly |
+| SMART Status | Verified (reports healthy) |
+| Partition Map | Unknown/Missing |
+| Read Any Data | **FAILS - I/O Error** |
+| Power Draw | 896mA (near 900mA limit) |
+
+**Diagnosis:** Hardware failure - likely the USB-SATA bridge inside the WD enclosure is failing. The drive platters may be intact, but the enclosure electronics cannot read them.
+
+**Outcome:** Cannot proceed with software recovery due to hardware I/O errors.
+
+---
+
+## Phase 4: Hardware Recovery Options (TBD)
+
+The drive has a hardware-level failure preventing any data reads. Software tools cannot help until the hardware issue is resolved.
+
+**Options:**
+
+| Option | Cost | Difficulty | Notes |
+|--------|------|------------|-------|
+| Try powered USB hub | $20-40 | Easy | Rules out power issues |
+| Try different USB cable | $10-15 | Easy | Requires WD proprietary Micro-B 3.0 connector |
+| Extract drive from enclosure | $15-25 | Medium | Requires SATA-to-USB adapter; may not work on newer WD models (USB soldered to drive) |
+| Professional data recovery | $300-1500+ | N/A | Last resort; they can read platters directly |
+
+**Next step:** Determine drive age/model to assess if internal drive extraction is possible.
 
 **Outcome:** (pending)
 
